@@ -267,10 +267,12 @@ export class Radius {
 
 /** 字号( fp ) */
 export class FontSize {
-  static readonly TINY: number = 10;
-  static readonly SMALL: number = 12;
-  static readonly BODY: number = 14;
-  static readonly TITLE: number = 16;
-  static readonly HEAD: number = 20;
-  static readonly BIG: number = 24;
+  // 全局字号基准(2026-11 手机端整体放大 ~30%):
+  // TINY 10→13 / SMALL 12→16 / BODY 14→18 / TITLE 16→21 / HEAD 20→26 / BIG 24→31
+  static readonly TINY: number = 13;
+  static readonly SMALL: number = 16;
+  static readonly BODY: number = 18;
+  static readonly TITLE: number = 21;
+  static readonly HEAD: number = 26;
+  static readonly BIG: number = 31;
 }

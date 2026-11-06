@@ -102,7 +102,7 @@ struct DevicesPage {
       // ---------- 顶部栏 ----------
       Row({ space: Space.SM }) {
         Text('‹')
-          .fontSize(24)
+          .fontSize(28)
           .fontColor(this.pal('TEXT_2'))
           .width(28)
           .onClick(() => { this.getUIContext().getRouter().back(); })
@@ -168,7 +168,7 @@ struct DevicesPage {
           ForEach(this.devices, (d: DeviceInfo) => {
             Row({ space: Space.MD }) {
               Text(this.roleIcon(d.role))
-                .fontSize(18)
+                .fontSize(21)
                 .fontColor(this.pal('TEXT_2'))
                 .width(24)
               Column({ space: 2 }) {

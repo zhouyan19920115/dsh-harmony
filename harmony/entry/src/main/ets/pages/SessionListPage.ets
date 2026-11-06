@@ -1281,7 +1281,7 @@ struct SessionListPage {
                   .alignItems(HorizontalAlign.Start)
                   .layoutWeight(1)
                   Text('›')
-                    .fontSize(18)
+                    .fontSize(21)
                     .fontColor(Palette.TEXT_3)
                 }
                 .width('100%')
@@ -1612,7 +1612,7 @@ struct SessionListPage {
 
         Row({ space: 6 }) {
           Text('+')
-            .fontSize(18)
+            .fontSize(21)
             .fontColor('#FFFFFF')
           Text('新建会话')
             .fontSize(FontSize.BODY)
@@ -1668,7 +1668,7 @@ struct SessionListPage {
               Row({ space: Space.SM }) {
                 Row() {
                   Text(row.expanded ? '▾' : '▸')
-                    .fontSize(16)
+                    .fontSize(18)
                     .fontColor(Palette.TEXT_3)
                 }
                 .width(24)
@@ -1727,7 +1727,7 @@ struct SessionListPage {
                 // ＋: 就在这个工作区里建会话(这次要加的那个按钮)
                 Row() {
                   Text('+')
-                    .fontSize(19)
+                    .fontSize(22)
                     .fontColor(Palette.ACCENT)
                 }
                 .width(30)
@@ -1766,7 +1766,7 @@ struct SessionListPage {
               Row({ space: Space.SM }) {
                 Row() {
                   Text(row.expanded ? '▾' : (row.expandable ? '▸' : ''))
-                    .fontSize(15)
+                    .fontSize(17)
                     .fontColor(Palette.TEXT_3)
                 }
                 .width(24)
@@ -1916,7 +1916,7 @@ struct SessionListPage {
         // 双栏时"新会话"放在列表栏底部, 免得浮在右栏的输入区上面
         Row({ space: 6 }) {
           Text('+')
-            .fontSize(18)
+            .fontSize(21)
             .fontColor('#FFFFFF')
           Text('新会话')
             .fontSize(FontSize.SMALL)
@@ -2096,7 +2096,7 @@ struct SessionListPage {
               // 刷新
               Row() {
                 Text('↻')
-                  .fontSize(17)
+                  .fontSize(20)
                   .fontColor(Palette.TEXT_2)
               }
               .width(34)
@@ -2110,7 +2110,7 @@ struct SessionListPage {
               // 设备
               Row() {
                 Text('▤')
-                  .fontSize(15)
+                  .fontSize(17)
                   .fontColor(Palette.TEXT_2)
               }
               .width(34)
@@ -2126,7 +2126,7 @@ struct SessionListPage {
               // 设置
               Row() {
                 Text('⚙')
-                  .fontSize(16)
+                  .fontSize(18)
                   .fontColor(Palette.TEXT_2)
               }
               .width(34)
@@ -2184,7 +2184,7 @@ struct SessionListPage {
           Column() {
             Row({ space: 6 }) {
               Text('+')
-                .fontSize(20)
+                .fontSize(23)
                 .fontWeight(FontWeight.Medium)
                 .fontColor('#FFFFFF')
               Text('新会话')

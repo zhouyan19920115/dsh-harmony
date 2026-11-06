@@ -1664,7 +1664,7 @@ export struct SessionDetailView {
         Row({ space: Space.SM }) {
           if (this.showBack) {
             Text('‹')
-              .fontSize(24)
+              .fontSize(28)
               .fontColor(this.pal('TEXT_2'))
               .width(28)
               .onClick(() => { this.getUIContext().getRouter().back(); })
@@ -1707,7 +1707,7 @@ export struct SessionDetailView {
 
           // 设置
           Text('⚙')
-            .fontSize(18)
+            .fontSize(21)
             .fontColor(this.pal('TEXT_2'))
             .width(30)
             .height(30)
@@ -1779,7 +1779,7 @@ export struct SessionDetailView {
           Row({ space: Space.SM }) {
             // 左边的 + 号: 添加文件或调用指令
             Text('+')
-              .fontSize(22)
+              .fontSize(25)
               .fontColor(this.pal('TEXT_2'))
               .width(32)
               .height(32)
@@ -1841,7 +1841,7 @@ export struct SessionDetailView {
 
             // 发送键悬浮在输入框右下角: 跟着输入框走, 永远点得到
             Text('↑')
-              .fontSize(18)
+              .fontSize(21)
               .fontColor(Color.White)
               .width(36)
               .height(36)
@@ -2998,7 +2998,7 @@ export struct SessionDetailView {
         if (!this.atBottom) {
           Row({ space: 4 }) {
             Text('↓')
-              .fontSize(16)
+              .fontSize(18)
               .fontColor('#FFFFFF')
             Text('最新')
               .fontSize(FontSize.SMALL)
