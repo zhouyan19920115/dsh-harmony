@@ -162,6 +162,8 @@ export struct SessionDetailView {
   @StorageProp('topSafeVp') topSafeVp: number = 0;
   /** 手势条高度 */
   @StorageProp('bottomSafeVp') bottomSafeVp: number = 0;
+  /** 键盘当前高度(vp): 输入框聚焦后用对话区滚动来响应, 不靠窗口平移 */
+  @StorageProp('keyboardVp') keyboardVp: number = 0;
 
   /** 主题版本号: ThemeController 切主题时 +1; pal() 读它 ⇒ 颜色实时重算 */
   @StorageLink('themeTick') themeTick: number = 0;
@@ -1752,26 +1754,28 @@ export struct SessionDetailView {
             .padding({ left: Space.LG, right: Space.LG, bottom: Space.SM })
         }
 
-        // 桌面端的内核审批(谁先答谁生效)
-        this.approvalPanel()
+        // 审批/提问/队列卡片放进限高滚动区: 卡片再多也不把输入区顶出屏幕,
+        // 发送键永远可见(之前就是被这排卡片顶出去的)。
+        Scroll() {
+          Column({ space: Space.SM }) {
+            // 桌面端的内核审批(谁先答谁生效)
+            this.approvalPanel()
 
-        // 桌面端在等我们回答的问题(ask_user_question)
-        this.askPanel()
+            // 桌面端在等我们回答的问题(ask_user_question)
+            this.askPanel()
 
-        // 队列: agent 在跑的时候排着的任务
-        this.queuePanel()
+            // 队列: agent 在跑的时候排着的任务
+            this.queuePanel()
+          }
+          .width('100%')
+        }
+        .width('100%')
+        .constraintSize({ maxHeight: '42%' })
+        .align(Alignment.Bottom)
+        .scrollBar(BarState.Off)
 
-        // 输入区: 圆角深色面板 + 一行工具条
+        // 输入区: 工具条单独一行 + 输入框(发送键悬浮在右下角)
         Column({ space: Space.SM }) {
-          TextArea({ placeholder: '发送消息或创建任务, / 调用指令, @ 文件或对话', text: this.draft })
-            .fontSize(FontSize.BODY)
-            .fontColor(this.pal('TEXT'))
-            .placeholderColor(this.pal('PLACEHOLDER'))
-            .backgroundColor(Color.Transparent)
-            .width('100%')
-            .height(84)
-            .onChange((value: string) => { this.draft = value; })
-
           Row({ space: Space.SM }) {
             // 左边的 + 号: 添加文件或调用指令
             Text('+')
@@ -1815,7 +1819,27 @@ export struct SessionDetailView {
                 .borderRadius(Radius.PILL)
                 .onClick(() => { this.cancel(); })
             }
+          }
+          .width('100%')
 
+          Stack({ alignContent: Alignment.BottomEnd }) {
+            TextArea({ placeholder: '发送消息或创建任务, / 调用指令, @ 文件或对话', text: this.draft })
+              .fontSize(FontSize.BODY)
+              .fontColor(this.pal('TEXT'))
+              .placeholderColor(this.pal('PLACEHOLDER'))
+              .backgroundColor(Color.Transparent)
+              .width('100%')
+              .height(84)
+              // 右下留出发送键的位置, 别让文字被圆钮盖住
+              .padding({ right: 52, bottom: 6 })
+              .onChange((value: string) => { this.draft = value; })
+              .onFocus(() => {
+                // 键盘弹起: 把对话滚到底, 最新消息和输入区都在视野里
+                this.scrollToEnd(true);
+                setTimeout(() => { this.scrollToEnd(true); }, 350);
+              })
+
+            // 发送键悬浮在输入框右下角: 跟着输入框走, 永远点得到
             Text('↑')
               .fontSize(18)
               .fontColor(Color.White)
@@ -1824,6 +1848,7 @@ export struct SessionDetailView {
               .textAlign(TextAlign.Center)
               .backgroundColor(this.draft.trim().length > 0 && !this.sending ? this.pal('ACCENT_SOLID') : this.pal('SURFACE_HI'))
               .borderRadius(Radius.PILL)
+              .margin({ right: 6, bottom: 6 })
               .onClick(() => { this.send(); })
           }
           .width('100%')
@@ -1868,7 +1893,9 @@ export struct SessionDetailView {
     .width('100%')
     .height('100%')
     .backgroundColor(this.pal('BG_DEEP'))
-    .padding({ top: this.topSafeVp, bottom: this.bottomSafeVp })
+    // 底部 padding = 手势条 + 键盘: 键盘弹起时整页抬升, 输入面板完整浮在键盘上,
+    // 发送键不会再被输入法的工具条盖住(系统平移量不够, 所以自己算)。
+    .padding({ top: this.topSafeVp, bottom: this.bottomSafeVp + this.keyboardVp })
     .bindSheet($$this.modelOpen, this.modelSheet(), {
       height: '72%',
       backgroundColor: this.pal('BG_DEEP'),

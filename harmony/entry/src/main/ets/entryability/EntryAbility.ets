@@ -101,6 +101,23 @@ export default class EntryAbility extends UIAbility {
       this.mainWindow = win;
       WindowChrome.apply(win);
       this.publishSafeInsets(win);
+      // 布局全屏: 系统不再自动平移窗口避让键盘, 改为应用全权处理 ——
+      // 键盘高度经 keyboardHeightChange 写进 AppStorage, 会话页把它加进底部
+      // padding, 输入面板(含发送键)永远完整浮在键盘上方。
+      win.setWindowLayoutFullScreen(true).then(() => {
+        hilog.info(DOMAIN, TAG, '布局全屏开启, 键盘避让改由应用处理');
+        this.publishSafeInsets(win);
+      }).catch((e: BusinessError) => {
+        hilog.warn(DOMAIN, TAG, '布局全屏设置失败(回退系统避让): %{public}s', e.message ?? '');
+      });
+      // 监听键盘高度: 键盘弹起时抬升底部 padding, 并把对话滚到底。
+      try {
+        win.on('keyboardHeightChange', (px: number) => {
+          AppStorage.setOrCreate<number>('keyboardVp', px2vp(px));
+        });
+      } catch (e) {
+        hilog.warn(DOMAIN, TAG, '键盘高度监听失败(不影响使用): %{public}s', (e as Error).message ?? '');
+      }
     }).catch((e: Error) => {
       hilog.warn(DOMAIN, TAG, '取主窗口失败: %{public}s', e.message ?? '');
     });
