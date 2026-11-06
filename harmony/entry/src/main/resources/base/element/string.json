@@ -1,0 +1,10 @@
+{
+  "string": [
+    { "name": "module_desc", "value": "DSHsync 鸿蒙客户端" },
+    { "name": "EntryAbility_desc", "value": "DSHsync 鸿蒙客户端主界面" },
+    { "name": "EntryAbility_label", "value": "DSHsync" },
+    { "name": "perm_internet_reason", "value": "需要连接桌面端代理服务以同步会话与下发指令" },
+    { "name": "perm_network_info_reason", "value": "需要读取本机网络信息, 才能在同一 WiFi 下自动找到你的电脑" },
+    { "name": "perm_keep_alive_reason", "value": "需要在后台保持与电脑的连接, 任务完成或需要你确认时才能及时发本地通知" }
+  ]
+}

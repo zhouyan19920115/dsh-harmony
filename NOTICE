@@ -1,0 +1,32 @@
+# NOTICE
+
+本项目 (DSH Harmony) 是独立实现, 与下列项目没有代码或隶属关系。
+列出它们是因为它们的**架构与交互设计**对本项目有参考价值, 尤其是"账号 = 客户端持有的密钥"
+与"手机端 UI 的信息层级"这两件事。
+
+本仓库的代码没有复制下列项目的任何源代码、图标、字体或文案。
+
+## 参考过的开源项目
+
+| 项目 | 许可证 | 我们参考了什么 |
+| --- | --- | --- |
+| [Happy Coder / Happy Harness](https://github.com/slopus/happy) (slopus/happy) | MIT | 账号模型(账号 = 客户端持有的主密钥)、手机端会话列表的扁平化处理、工具调用默认收成一行、输入框悬浮在对话上方的结构 |
+| [VibeTunnel](https://github.com/amantus-ai/vibetunnel) (amantus-ai) | MIT | 自建中继的做法、服务端鉴权思路 |
+| [Remodex / Dex](https://github.com/emanuele-web04/remodex) (emanuele-web04, MRL-00) | Apache-2.0 | 桌面端主动外拨、重连时的缓冲重放、"在桌面端继续"的交接按钮 |
+| [Termopus](https://github.com/Termopus/termopus) (Termopus) | AGPL-3.0 | **仅参考了交互结构的想法, 没有使用它的任何代码。** AGPL 的传染性许可决定了我们不能复制它的代码, 所以只看了它的消息类型划分方式 |
+
+> 如果你希望在自己的 fork 里加入上面某个项目的代码, 请先确认该项目的许可证:
+> Happy (MIT) 与 VibeTunnel (MIT) 可以自由使用并保留版权声明,
+> Remodex (Apache-2.0) 需要保留 NOTICE,
+> **Termopus (AGPL-3.0) 会要求你的衍生作品同样开源**。
+
+## 设计参考(非开源)
+
+- DeepSeek Harness 桌面端 —— 本项目是它的手机端, 界面信息层级、配色与状态条都对齐桌面端。
+  DeepSeek Harness 本身不是本仓库的一部分, 本项目也**不包含**它的任何代码。
+- Claude Code Remote Control / Codex Remote Connections / Cursor for iOS —— 仅作为交互方式的参考,
+  没有使用它们的任何素材。
+
+## 字体
+
+本项目不使用任何第三方字体, 全部走系统字体 (HarmonyOS Sans / HarmonyOS Sans Mono)。

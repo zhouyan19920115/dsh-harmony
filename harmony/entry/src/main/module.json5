@@ -1,0 +1,61 @@
+{
+  "module": {
+    "name": "entry",
+    "type": "entry",
+    "description": "$string:module_desc",
+    "mainElement": "EntryAbility",
+    "deviceTypes": ["phone", "tablet", "2in1"],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    "abilities": [
+      {
+        "name": "EntryAbility",
+        "srcEntry": "./ets/entryability/EntryAbility.ets",
+        "description": "$string:EntryAbility_desc",
+        "icon": "$media:app_icon",
+        "label": "$string:EntryAbility_label",
+        "startWindowIcon": "$media:app_icon",
+        "startWindowBackground": "$color:start_window_background",
+        "exported": true,
+        "skills": [
+          {
+            "entities": ["entity.system.home"],
+            "actions": ["ohos.want.action.home"]
+          },
+          {
+            // 华为 Push Kit: 有且只能有一个 ability 声明这个 action。
+            "actions": ["action.ohos.push.listener"]
+          }
+        ]
+      }
+    ],
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.INTERNET",
+        "reason": "$string:perm_internet_reason",
+        "usedScene": {
+          "abilities": ["EntryAbility"],
+          "when": "inuse"
+        }
+      },
+      {
+        // 局域网自动发现: 要读本机 IP 才能算出同网段的候选地址。
+        "name": "ohos.permission.GET_NETWORK_INFO",
+        "reason": "$string:perm_network_info_reason",
+        "usedScene": {
+          "abilities": ["EntryAbility"],
+          "when": "inuse"
+        }
+      }
+    ],
+    // AGC 的 client_id 放在这里: AppScope/app.json5 的 schema 不认 metadata 这个字段
+    // (SDK 自带的 app.json schema 里没有它), 放那儿整个工程都编不过。
+    "metadata": [
+      {
+        "name": "client_id",
+        "value": "YOUR_AGC_CLIENT_ID"
+      }
+    ]
+  }
+}

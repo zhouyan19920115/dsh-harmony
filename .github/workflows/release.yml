@@ -1,0 +1,90 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '发布版本号, 例如 v0.1.0'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: publish a release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Collect the release notes
+        id: notes
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          {
+            echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+            if [ -f CHANGELOG.md ]; then
+              awk "/^## $TAG/,/^## v[^ ]/" CHANGELOG.md | sed '$d' > notes.md
+            else
+              echo "see the commit log" > notes.md
+            fi
+          } || true
+
+      - name: Create the release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.notes.outputs.tag }}
+          name: ${{ steps.notes.outputs.tag }}
+          body_path: notes.md
+          draft: false
+          prerelease: ${{ contains(github.event.inputs.tag || github.ref_name, '-rc') }}
+          files: |
+            notes.md
+
+  # 打包 HAP 需要 DevEco Studio, 它不能公开分发, 所以这一步要在装了 DevEco 的机器上跑。
+  # 用法: 给这台机器打上 self-hosted 标签, 然后手动触发这个 job。
+  hap:
+    name: build the HAP (needs a self-hosted runner with DevEco Studio)
+    runs-on: [self-hosted, windows, deveco]
+    if: github.event_name == 'workflow_dispatch' && contains(github.event.inputs.tag, 'hap')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Look for DevEco Studio
+        id: deveco
+        shell: pwsh
+        run: |
+          $candidates = @(
+            "$env:DEVECO_STUDIO_PATH",
+            "D:\APP\Devecostudio26\DevEco Studio",
+            "C:\Program Files\Huawei\DevEco Studio"
+          ) | Where-Object { $_ -and (Test-Path (Join-Path $_ "tools\hvigor\bin\hvigorw.js")) }
+          if ($candidates.Count -eq 0) { Write-Output "found=" ; exit 1 }
+          Write-Output "found=$($candidates[0])"
+        continue-on-error: true
+
+      - name: Build the HAP
+        if: steps.deveco.outputs.found != ''
+        shell: pwsh
+        run: |
+          $ide = "${{ steps.deveco.outputs.found }}"
+          $env:DEVECO_STUDIO_PATH = $ide
+          $env:DEVECO_SDK_HOME = "$ide\sdk"
+          $env:JAVA_HOME = "$ide\jbr"
+          $env:Path = "$ide\tools\node;$ide\jbr\bin;$env:Path"
+          Set-Location "${{ github.workspace }}\harmony"
+          & "$ide\tools\node\node.exe" "$ide\tools\hvigor\bin\hvigorw.js" assembleHap --mode module -p module=entry@default -p buildMode=debug --no-daemon
+          if ($LASTEXITCODE -ne 0) { throw "the build failed" }
+
+      - name: Upload the HAP
+        if: steps.deveco.outputs.found != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag }}
+          files: |
+            harmony/entry/build/default/outputs/default/entry-default-unsigned.hap

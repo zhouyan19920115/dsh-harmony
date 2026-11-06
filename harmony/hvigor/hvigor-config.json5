@@ -1,0 +1,16 @@
+{
+  "modelVersion": "26.0.0",
+  "dependencies": {},
+  "execution": {
+    "analyze": "normal",
+    "daemon": false
+  },
+  "logging": {
+    "level": "info"
+  },
+  "debugging": {
+    "stacktrace": false
+  },
+  "nodeOptions": {}
+}
+

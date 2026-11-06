@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>隐私政策 · DSHsync</title>
+<style>
+  :root { color-scheme: dark light; }
+  body {
+    margin: 0; padding: 0;
+    background: #151517; color: #E9EAEB;
+    font-family: -apple-system, "HarmonyOS Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.75; font-size: 15px;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 24px 20px 64px; }
+  h1 { font-size: 24px; margin: 8px 0 4px; }
+  h2 { font-size: 16px; margin: 28px 0 8px; color: #7AAFFF; }
+  p { margin: 0 0 12px; }
+  .meta { color: #8C8F93; font-size: 13px; margin-bottom: 20px; }
+  .card { background: #2C2C2E; border: 1px solid #43454A; border-radius: 14px; padding: 18px 20px; }
+  ol, ul { padding-left: 22px; margin: 0 0 12px; }
+  li { margin-bottom: 6px; }
+  .nav { display: flex; gap: 12px; margin-bottom: 18px; }
+  .nav a { color: #7AAFFF; text-decoration: none; font-size: 14px; }
+  footer { margin-top: 32px; color: #8C8F93; font-size: 12px; }
+  @media (prefers-color-scheme: light) {
+    body { background: #f6f6f7; color: #1b1b1c; }
+    .card { background: #fff; border-color: #e2e2e5; }
+    h2 { color: #2E6BE6; }
+    .meta, footer { color: #6b6d70; }
+    .nav a { color: #2E6BE6; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav">
+    <a href="/legal/index.html">隐私政策</a>
+    <a href="/legal/user-agreement.html">用户协议</a>
+  </div>
+  <h1>隐私政策</h1>
+  <div class="meta">更新日期: 2026-10-25 · DSHsync(DSH 鸿蒙手机客户端)</div>
+  <div class="card">
+    <h2>一、我们是谁</h2>
+    <p>DSHsync 是 DSH 的鸿蒙手机客户端, 用来让你在手机上查看和操作电脑上运行的 DSH 会话。开发主体: 开发者(个人开发者)。DSHsync 与模型服务商无隶属、授权或合作关系, 只是 DSH 开源桌面端的一个第三方客户端。</p>
+
+    <h2>二、我们收集什么</h2>
+    <p>本 App 不收集、不上传你的个人身份信息(姓名、手机号、身份证号、位置等), 也没有广告和用户画像。App 只在「你的设备本地」保存以下内容, 且不会主动上传:</p>
+    <ol>
+      <li>连接信息: 电脑的局域网地址 / 中继地址、配对后换到的访问令牌、设备号。令牌用系统 HUK(硬件密钥库)加密后存盘, 界面默认打码显示。</li>
+      <li>显示偏好: 字号、主题。</li>
+      <li>协议勾选状态: 你是否已阅读并同意本政策与《用户协议》。</li>
+      <li>通知相关: 华为 Push 推送令牌, 以及本地通知需要的会话 id。</li>
+    </ol>
+
+    <h2>三、我们什么时候会访问网络</h2>
+    <p>只有在你「主动使用」以下功能时才会发起网络请求:</p>
+    <ol>
+      <li>「自动探测」/ 自动配对: 手机会在「当前局域网内」扫描私有地址段, 用来找到运行着 DSH 桌面端的电脑。这是局域网内的扫描, 不会把扫描结果发到互联网。</li>
+      <li>与电脑(或云中继)建立连接: 传输会话内容、模型列表、权限预设等, 走的是你和电脑之间的连接。</li>
+      <li>接收桌面端推送: 由华为 Push 服务中转, 通知里只带会话 id, 不带会话内容。</li>
+    </ol>
+    <p>在你勾选同意之前, 上述「自动探测」不会执行 —— 我们不会在你不知情的情况下扫你的网络。</p>
+
+    <h2>四、权限说明</h2>
+    <ul>
+      <li>网络: 用于连接电脑 / 局域网探测 / 接收推送。</li>
+      <li>通知: 用于桌面端有任务时提醒你(可随时在系统设置里关掉)。</li>
+      <li>摄像头、麦克风、位置、通讯录等: 本 App 不会申请, 也不需要。</li>
+    </ul>
+
+    <h2>五、第三方</h2>
+    <p>App 使用华为 Push Kit 推送服务; 桌面端可能使用你自建或官方的云中继服务。除此之外没有其它第三方 SDK, 没有广告和统计 SDK。</p>
+
+    <h2>六、你的控制权</h2>
+    <ul>
+      <li>随时可以在「设置 → 隐私与协议」里取消勾选; 取消后自动探测会停用。</li>
+      <li>卸载 App 即删除全部本地数据(含令牌与勾选状态)。</li>
+      <li>想彻底清数据, 可以在「设置 → 连接」里重新配对, 或直接卸载重装。</li>
+    </ul>
+
+    <h2>七、未成年人保护</h2>
+    <p>本 App 是开发者工具的移动端, 不面向未成年人收集任何个人信息。</p>
+
+    <h2>八、联系我们</h2>
+    <p>开发者: YOUR NAME<br>邮箱: <a href="mailto:you@example.com">you@example.com</a><br>源码: github.com/zhouyan19920115/dsh-harmony</p>
+  </div>
+  <footer>© 2026 开发者 · 本页面与 App 内的《隐私政策》正文一致</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  node-tests:
+    name: bridge + relay test suites
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        suite:
+          - { name: bridge, dir: bridge, cmd: "node test/run.js" }
+          - { name: bridge-relay-client, dir: bridge, cmd: "node test/relay-client.test.js" }
+          - { name: relay, dir: relay, cmd: "node test/run.js" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run ${{ matrix.suite.name }}
+        working-directory: ${{ matrix.suite.dir }}
+        run: ${{ matrix.suite.cmd }}
+      - name: Upload the logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-${{ matrix.suite.name }}
+          path: |
+            **/*.log
+          retention-days: 3
+
+  arkts-syntax:
+    name: ArkTS sources are syntactically sane
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check that every .ets file parses as a TypeScript-ish module
+        run: |
+          # The HarmonyOS app needs DevEco Studio (not redistributable) to compile.
+          # Here we only make sure the ArkTS sources did not get corrupted:
+          # balanced braces, no leftover merge markers, no tabs-vs-spaces surprises.
+          set -e
+          find harmony/entry/src/main/ets -name '*.ets' | while read -r f; do
+            echo "--- $f"
+            grep -n '<<<<<<<\|=======\|>>>>>>>' "$f" && { echo "merge marker in $f"; exit 1; } || true
+            node -e '
+              const fs = require("fs");
+              const src = fs.readFileSync(process.argv[1], "utf8");
+              let depth = 0;
+              for (const ch of src) {
+                if (ch === "{") depth++;
+                else if (ch === "}") depth--;
+                if (depth < 0) { console.error("unbalanced braces"); process.exit(1); }
+              }
+              if (depth !== 0) { console.error("unbalanced braces: " + depth); process.exit(1); }
+            ' "$f"
+          done
+          echo "arkts sources look sane"

@@ -1,0 +1,21 @@
+phone acceptance check - 2026-10-24 04:44:01
+device: 192.168.1.20:40663
+
+FAIL  1. app starts and lands on a page of the app
+      the phone is LOCKED (face or fingerprint), the app can not come to the front. Unlock it once and run again. screenshot: 
+FAIL  2. connected and the conversation tree is not empty
+      connected=False, conversations=0. screenshot: D:\APP\Deepseek\DSHHarmony\docs\screenshots\verify-02-session-list.jpeg
+SKIP  5. the triangle collapses the subtree and does not open a session
+      no collapsible row on the screen (the tree is empty or already expanded)
+FAIL  3. opening a conversation shows the newest message last
+      could not open a conversation, tried 5 titles
+SKIP  6. a truncated message can be expanded
+      no truncated message on the screen (nothing to expand)
+SKIP  4. a message that is typed in shows up at the bottom
+      skipped on purpose (-SkipSend)
+FAIL  7. the access token is masked on screen
+      could not reach the connect page
+SKIP  8. the token is not stored in clear text in the preferences
+      no preferences file on the phone yet (the app has not saved anything, or the shell may not read the app data)
+
+total: 0 passed, 4 failed, 4 skipped, 2 screenshots

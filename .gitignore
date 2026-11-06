@@ -1,0 +1,86 @@
+# 依赖与构建产物
+node_modules/
+harmony/**/build/
+harmony/**/oh_modules/
+harmony/.hvigor/
+harmony/.cxx/
+harmony/**/.cxx/
+harmony/local.properties
+harmony/.idea/
+*.hap
+*.app
+
+# 桌面端单文件可执行(55 MB, 不进仓库; 用 tools\build-desktop-exe.ps1 重新生成)
+# —— 它放在 harmony/deploy/ 里(中继从那儿发它), **不进 HAP**(进 HAP 首屏会被拖死 ✓)
+dist/
+*.exe
+harmony/entry/src/main/resources/rawfile/dsh-harmony-desktop-exe.zip
+harmony/deploy/*.zip
+
+# 运行时生成的配置(含真实令牌, 绝不能提交)
+relay/accounts.json
+relay/devices.json
+relay/*.local.json
+bridge/bridge.json
+bridge/*.local.json
+*.token
+*.secret
+
+# 签名材料(含私钥, 绝不能提交)
+certificate/
+*.p12
+*.p7b
+*.cer
+*.csr
+
+# 日志
+*.log
+tools/*.log
+harmony/.build*.log
+harmony/.build-latest.log
+relay-test.log
+.build-latest.log
+
+# 本机临时文件
+_tmp/
+_tmp_asar_header.json
+research/*/
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+
+# uitest dump 出来的临时布局
+tools/r.json
+
+# 开源发布快照目录(publish-open-source.ps1 生成, 可随时重建)
+_publish/
+
+# ����������� (npm pack)
+plugins/**/*.tgz
+
+# 本地调试临时文件/探测脚本(开源版不提交)
+.tmp-*
+_tmp*
+_*.py
+_*.ps1
+_*.mjs
+_*.cjs
+_*.json
+_*.md
+research/*/
+
+# 内部开发日志(含本机信息), 不进开源仓库
+docs/UI-REFRESH.md
+
+# 内部发布工具(含脱敏规则里的原始值), 不进开源仓库
+tools/publish-open-source.ps1
+
+# 本地签名配置备份/真机截图(含个人信息), 不进开源仓库
+harmony/build-profile.json5.devbackup
+docs/screenshots/upload-*.jpeg

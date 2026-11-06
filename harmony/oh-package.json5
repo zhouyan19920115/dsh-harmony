@@ -1,0 +1,9 @@
+{
+  "modelVersion": "26.0.0",
+  "name": "dsh-harmony",
+  "version": "1.0.0",
+  "description": "DSH HarmonyOS phone client for the DeepSeek Harness desktop agent",
+  "dependencies": {},
+  "devDependencies": {}
+}
+

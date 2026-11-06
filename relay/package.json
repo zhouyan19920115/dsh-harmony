@@ -1,0 +1,18 @@
+{
+  "name": "dsh-harmony-relay",
+  "version": "1.0.0",
+  "description": "Cloud relay that connects the HarmonyOS phone to the desktop DeepSeek Harness bridge, zero runtime dependencies.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "dsh-harmony-relay": "src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "test": "node test/run.js"
+  },
+  "license": "MIT"
+}

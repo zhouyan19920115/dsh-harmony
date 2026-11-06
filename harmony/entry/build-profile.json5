@@ -1,0 +1,36 @@
+{
+  "apiType": "stageMode",
+  "buildOption": {
+    // 原生模块: 手机端的封签(AES-256-GCM)在 C 层做。
+    // ArkTS 的 cryptoFramework 在这台设备上传不进 cipher 的参数对象(init 报 401),
+    // 所以 cipher 那一半走 NDK 的 C-API(系统的 CryptoArchitectureKit)。
+    "externalNativeOptions": {
+      "path": "./src/main/cpp/CMakeLists.txt",
+      "arguments": "",
+      "cppFlags": "-std=c++17",
+      "abiFilters": [
+        "arm64-v8a",
+        "x86_64"
+      ]
+    }
+  },
+  "buildOptionSet": [
+    {
+      "name": "release",
+      "arkOptions": {
+        "obfuscation": {
+          "ruleOptions": {
+            "enable": false,
+            "files": []
+          }
+        }
+      }
+    }
+  ],
+  "targets": [
+    {
+      "name": "default",
+      "runtimeOS": "HarmonyOS"
+    }
+  ]
+}

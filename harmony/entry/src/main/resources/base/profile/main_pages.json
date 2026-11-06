@@ -1,0 +1,10 @@
+{
+  "src": [
+    "pages/ConnectPage",
+    "pages/SessionListPage",
+    "pages/SessionPage",
+    "pages/DevicesPage",
+    "pages/SettingsPage",
+    "pages/LegalPage"
+  ]
+}
