@@ -70,14 +70,14 @@ bridge 在 `/_dsh/discover` 应答(没装这套代码的电脑不响应, 所以�
 的一次性配对码换令牌 → 自动连上。**要离开局域网**: 点「切到远程」, 电脑把中继地址和令牌交给
 手机, 手机自己切过去(令牌依旧可见可复制)。
 
-![会话列表](docs/screenshots/ui-list.png)
-![会话页](docs/screenshots/ui-session.png)
-![队列](docs/screenshots/ui-queue-expanded.jpeg)
-![+号面板](docs/screenshots/ui-plus.jpeg)
-![模型选择](docs/screenshots/ui-model.jpeg)
-![设置](docs/screenshots/ui-settings.png)
-![大屏双栏(三折叠)](docs/screenshots/ui-large.jpeg)
-![真机 Mate 80](docs/screenshots/ui-real-device.jpeg)
+*(截图略——公开版不含实机截图)*
+*(截图略——公开版不含实机截图)*
+*(截图略——公开版不含实机截图)*
+*(截图略——公开版不含实机截图)*
+*(截图略——公开版不含实机截图)*
+*(截图略——公开版不含实机截图)*
+*(截图略——公开版不含实机截图)*
+*(截图略——公开版不含实机截图)*
 
 ---
 
@@ -282,18 +282,18 @@ hdc shell aa start -b com.dsh.harmony -a EntryAbility
 
 | 步骤 | 截图 |
 |---|---|
-| 连接页(自动探测 / 令牌) | [01-connectpage.jpeg](docs/screenshots/01-connectpage.jpeg) |
-| 自动探测到宿主机 `10.0.2.2:8787` | [02-auto-discover.jpeg](docs/screenshots/02-auto-discover.jpeg) |
-| 测试连接成功 · 桌面端在线 | [03-test-connection.jpeg](docs/screenshots/03-test-connection.jpeg) |
-| 会话列表(桌面端真实会话) | [04-session-list.jpeg](docs/screenshots/04-session-list.jpeg) |
-| 会话详情(桌面端对话全文) | [05-session-detail.jpeg](docs/screenshots/05-session-detail.jpeg) |
-| 在手机上输入指令 | [06-command-typed.jpeg](docs/screenshots/06-command-typed.jpeg) |
-| **桌面端执行完, 回复回到手机** | [07-reply-on-phone.jpeg](docs/screenshots/07-reply-on-phone.jpeg) |
-| 新建会话 | [08-new-session.jpeg](docs/screenshots/08-new-session.jpeg) |
-| **经云中继连上桌面端** | [09-relay-connect.jpeg](docs/screenshots/09-relay-connect.jpeg) |
-| 经中继同步到的会话列表 | [10-relay-session-list.jpeg](docs/screenshots/10-relay-session-list.jpeg) |
-| 经中继在手机上输入指令 | [11-relay-command-typed.jpeg](docs/screenshots/11-relay-command-typed.jpeg) |
-| **经中继收到桌面端的回复** | [12-relay-reply-on-phone.jpeg](docs/screenshots/12-relay-reply-on-phone.jpeg) |
+| 连接页(自动探测 / 令牌) | 01-connectpage.jpeg |
+| 自动探测到宿主机 `10.0.2.2:8787` | 02-auto-discover.jpeg |
+| 测试连接成功 · 桌面端在线 | 03-test-connection.jpeg |
+| 会话列表(桌面端真实会话) | 04-session-list.jpeg |
+| 会话详情(桌面端对话全文) | 05-session-detail.jpeg |
+| 在手机上输入指令 | 06-command-typed.jpeg |
+| **桌面端执行完, 回复回到手机** | 07-reply-on-phone.jpeg |
+| 新建会话 | 08-new-session.jpeg |
+| **经云中继连上桌面端** | 09-relay-connect.jpeg |
+| 经中继同步到的会话列表 | 10-relay-session-list.jpeg |
+| 经中继在手机上输入指令 | 11-relay-command-typed.jpeg |
+| **经中继收到桌面端的回复** | 12-relay-reply-on-phone.jpeg |
 
 > 最后一张是整个项目的验收点: 手机上敲一条 `reply with exactly: OK-HARMONY`,
 > 桌面上的真实 DSH agent 收到并执行, 回复 `OK-HARMONY` 通过 WebSocket 流式回到手机。
@@ -302,15 +302,15 @@ hdc shell aa start -b com.dsh.harmony -a EntryAbility
 
 | 界面 | 截图 |
 |---|---|
-| 会话列表(按工作区分组 / 折叠 / 运行中转圈 / 相对时间) | [ui-list.png](docs/screenshots/ui-list.png) |
-| 会话页「对话」视图(用户面板 / 工具单行 / 状态行 / 用量状态条) | [ui-session.png](docs/screenshots/ui-session.png) |
-| 会话页「轨迹」视图(助手 / 调用 角色色时间线) | [ui-trace.png](docs/screenshots/ui-trace.png) |
-| 连接页(深色表单 / 自动探测) | [ui-connect.png](docs/screenshots/ui-connect.png) |
-| 设备页(同一账号下的所有端) | [ui-devices.jpeg](docs/screenshots/ui-devices.jpeg) |
-| **队列中排队的任务(展开后带编辑 / 插队 / 删除)** | [ui-queue-expanded.jpeg](docs/screenshots/ui-queue-expanded.jpeg) |
-| **`+` 号面板(指令 / 技能 / 文件)** | [ui-plus.jpeg](docs/screenshots/ui-plus.jpeg) |
-| **模型选择(按 provider 分组 + 推理强度)** | [ui-model.jpeg](docs/screenshots/ui-model.jpeg) |
-| **设置页(连接 / 模型 / 权限 / 显示 / 关于)** | [ui-settings.png](docs/screenshots/ui-settings.png) |
+| 会话列表(按工作区分组 / 折叠 / 运行中转圈 / 相对时间) | ui-list.png |
+| 会话页「对话」视图(用户面板 / 工具单行 / 状态行 / 用量状态条) | ui-session.png |
+| 会话页「轨迹」视图(助手 / 调用 角色色时间线) | ui-trace.png |
+| 连接页(深色表单 / 自动探测) | ui-connect.png |
+| 设备页(同一账号下的所有端) | ui-devices.jpeg |
+| **队列中排队的任务(展开后带编辑 / 插队 / 删除)** | ui-queue-expanded.jpeg |
+| **`+` 号面板(指令 / 技能 / 文件)** | ui-plus.jpeg |
+| **模型选择(按 provider 分组 + 推理强度)** | ui-model.jpeg |
+| **设置页(连接 / 模型 / 权限 / 显示 / 关于)** | ui-settings.png |
 
 ---
 
