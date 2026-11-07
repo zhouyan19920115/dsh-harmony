@@ -759,17 +759,48 @@ export class DshClient {
       ...(agentPreset ? { agentPreset } : {}),
     });
     let value;
-    try {
-      value = await create(workspaceId === undefined
-        ? (directory === null ? {} : { cwd: directory })
-        : { workspaceId });
-    } catch (error) {
-      // The Workspace was deleted between the resolution and the creation. The session is
-      // still worth having, so it is created in the plain directory instead.
-      if (workspaceId === undefined || error?.code !== 'workspace/not-found') throw error;
-      this.log?.('warn', `the workspace "${workspaceId}" is gone; the session is created in the plain directory`);
-      value = await create(directory === null ? {} : { cwd: directory });
-      workspaceId = undefined;
+    // 用 workspaceId 创建失败时, 先重试而不是静默降级成裸 cwd ——
+    // 裸 cwd 的会话在桌面端永远挂在「未分组」里, 用户得手工搬。
+    // 22:38 那次事故就是: DSH 重启窗口里 workspace/create 失败 → 降级 → 永久掉组。
+    // 只有 DSH 根本不支持工作区 RPC(老版本)时才走裸 cwd 兜底。
+    if (workspaceId !== undefined) {
+      const delays = [800, 2000, 4000];
+      for (let attempt = 0; ; attempt++) {
+        try {
+          value = await create({ workspaceId });
+          break;
+        } catch (error) {
+          // 会话已经建出来、只是挂工作区失败: 重试会造出第二条, 直接把错误抛回手机。
+          if (error?.code === 'session/workspace-attach-failed') throw error;
+          // 这台 DSH 根本没有工作区 RPC ⇒ 老版本, 立即走裸 cwd 兜底。
+          if (error?.code === 'not_found' || error?.code === 'gateway/unknown-endpoint'
+            || error?.code === 'gateway/bad-request' && String(error?.message ?? '').includes('unknown')) {
+            this.log?.('warn', `this DSH has no workspace RPC (${error?.code ?? '?'}); the session is created with a plain cwd`);
+            value = await create(directory === null ? {} : { cwd: directory });
+            workspaceId = undefined;
+            break;
+          }
+          if (attempt >= delays.length) throw error;
+          // 多半是重启/重连窗口: 重发现一次, 再解析一次工作区, 然后重试。
+          this.log?.('warn', `the workspace-scoped create failed (${error?.code ?? '?'}); retry ${attempt + 1}/${delays.length} after a rediscovery`);
+          try { await this.rediscover(); } catch { /* 重发现失败也要等一等再试 */ }
+          await new Promise((resolve) => setTimeout(resolve, delays[attempt]));
+          try {
+            workspaceId = (await this.resolveWorkspace(directory))?.workspaceId ?? workspaceId;
+          } catch { /* 沿用旧的 workspaceId 再试一次 */ }
+        }
+      }
+    } else {
+      try {
+        value = await create(directory === null ? {} : { cwd: directory });
+      } catch (error) {
+        // The Workspace was deleted between the resolution and the creation. The session is
+        // still worth having, so it is created in the plain directory instead.
+        if (error?.code !== 'workspace/not-found') throw error;
+        this.log?.('warn', `the workspace is gone; the session is created in the plain directory`);
+        value = await create({});
+        workspaceId = undefined;
+      }
     }
     return {
       sessionId: value?.sessionId ?? null,
