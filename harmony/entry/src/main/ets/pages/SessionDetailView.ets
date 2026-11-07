@@ -1563,9 +1563,11 @@ export struct SessionDetailView {
       const state = await AppState.client.getSessionState(this.sessionId);
       this.stateData = state;
       if (state.model !== null) {
-        this.modelProvider = state.model.provider;
-        this.modelName = state.model.model;
-        this.modelEffort = state.model.reasoningEffort;
+        // 桌面端对不支持推理档位的模型(如 glm-5.3-flash)不返回 reasoningEffort,
+        // 不兜底的话这里会把 undefined 塞进 state, 模型面板一点就闪退。
+        this.modelProvider = state.model.provider ?? '';
+        this.modelName = state.model.model ?? '';
+        this.modelEffort = state.model.reasoningEffort ?? '';
       }
     } catch (e) {
       const err = e as Error;
@@ -1583,13 +1585,13 @@ export struct SessionDetailView {
       const state = await AppState.client.getSessionState(this.sessionId);
       this.stateData = state;
       if (state.model !== null) {
-        this.modelProvider = state.model.provider;
-        this.modelName = state.model.model;
-        this.modelEffort = state.model.reasoningEffort;
+        this.modelProvider = state.model.provider ?? '';
+        this.modelName = state.model.model ?? '';
+        this.modelEffort = state.model.reasoningEffort ?? '';
       } else if (this.catalog !== null && this.catalog.default !== null) {
-        this.modelProvider = this.catalog.default.provider;
-        this.modelName = this.catalog.default.model;
-        this.modelEffort = this.catalog.default.reasoningEffort;
+        this.modelProvider = this.catalog.default.provider ?? '';
+        this.modelName = this.catalog.default.model ?? '';
+        this.modelEffort = this.catalog.default.reasoningEffort ?? '';
       }
     } catch (e) {
       const err = e as Error;
@@ -2925,8 +2927,10 @@ export struct SessionDetailView {
     .backgroundColor(this.pal('SURFACE'))
     .borderRadius(Radius.MD)
     .onClick(() => {
-      const effort: string = this.modelEffort.length > 0 && this.modelName === modelId
-        ? this.modelEffort
+      // modelEffort 可能被「无档位模型」的 state 轮询置空 —— 兜底, 别在点击里读它的属性
+      const current: string = this.modelEffort ?? '';
+      const effort: string = current.length > 0 && this.modelName === modelId
+        ? current
         : defaultEffort;
       void this.chooseModel(provider.id, modelId, effort);
     })

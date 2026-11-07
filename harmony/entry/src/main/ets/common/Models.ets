@@ -206,7 +206,8 @@ export interface ModelProvider {
 export interface ModelChoice {
   provider: string;
   model: string;
-  reasoningEffort: string;
+  /** 推理档位: 桌面端对不支持档位的模型(如 glm-5.3-flash)不返回这个字段 */
+  reasoningEffort?: string;
 }
 
 /** 模型目录 */
